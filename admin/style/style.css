@@ -1,0 +1,362 @@
+.navigation {
+  width: 19.3%;
+  height: 100%;
+  position: fixed;
+  background-color: #e8e7e7;
+}
+.navigation .menu li.active {
+  background-color: #bababa; /* Change to your preferred color */
+  border-left: 4px solid #2196f3; /* Accent bar */
+}
+
+.navigation .menu li.active a p {
+  color: #2196f3; /* Change text color */
+}
+.logo img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.menu {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu ul li {
+  float: left;
+  width: 100%;
+  cursor: pointer;
+}
+.menu ul li a {
+  display: block;
+  padding-top: 14px;
+  padding-left: 25px;
+  border-bottom: 1px solid #ffffff;
+  text-decoration: none;
+  color: #000000;
+}
+.menu ul li a:hover {
+  background-color: #c5c4c4;
+}
+.nav-top {
+  width: 81%;
+  position: absolute;
+  left: 19%;
+  background-color: #e8e7e7;
+  float: left;
+}
+.nav-top .bar {
+  width: 100%;
+  position: relative;
+  float: left;
+  top: 2px;
+  /* border: 2px solid #000000; */
+  background-color: #e8e7e7;
+}
+.nav-top .bar ul {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.nav-top .bar ul li {
+  float: left;
+  height: 50px;
+  line-height: 50px;
+}
+.title {
+  width: 20%;
+  float: left;
+  margin-left: 10px;
+  /* border-right: 2px solid #333; */
+  font-family: fantasy;
+}
+.name-com {
+  width: 50%;
+  float: left;
+  margin-left: 10px;
+  text-align: center;
+  /* border-right: 2px solid #333; */
+  font-family: fantasy;
+}
+.user {
+  width: 20%;
+  float: left;
+  text-align: center;
+  margin-left: 10px;
+  border-right: 2px solid #333;
+  font-family: fantasy;
+}
+.logout {
+  width: 4%;
+  padding-left: 50px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+.logout i{
+  font-size: 18px;
+  color: #000000;
+  padding-top: 15px;
+  font-weight: bold;
+}
+
+.contain {
+  width: 81%;
+  height: 93%;
+  position: fixed;
+  left: 19%;
+  top: 55px;
+  overflow-y: scroll;
+}
+
+.box {
+  height: 100px;
+  margin-top: 5px;
+  position: relative;
+}
+.box .box-dash {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #e8e7e7;
+  box-shadow: 2px 10px solid #333;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+}
+.box .box-dash .box1 h4 {
+  padding-top: 20px;
+  padding-left: 30px;
+}
+.box .box-dash .box1 p {
+  padding-left: 30px;
+}
+
+.total-num ,
+.leave-num,
+.present-num{
+  width: 50%;
+  float: right;
+  padding-top: 40px;
+  padding-left: 50px;
+}
+.total-num a,
+.leave-num a,
+.present-num a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #000000;
+  font-family: "Roboto", sans-serif;
+}
+.row-page {
+  width: 100%;
+  height: 45px;
+  float: left;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  /* background-color: rgba(10, 121, 255, 0.725); */
+  /* padding: 3px; */
+  /* display: none; */
+}
+.row-page ul li {
+  float: left;
+}
+.row-page ul {
+  list-style: none;
+}
+.row-page ul:last-child {
+  float: right;
+}
+.num2 {
+  width: 75px;
+  padding: 9px;
+  background-color: rgb(155, 154, 154);
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  /* color: white; */
+  box-sizing: border-box;
+  margin-right: 20px;
+}
+.btn-back,
+.btn-next {
+  background-color: palegoldenrod;
+}
+.page {
+  margin: 0 10px;
+  padding: 8px;
+}
+/* .tbl-box {
+  width: 100%;
+  height: 70%px;
+  overflow-y: scroll;
+  float: left;
+  margin-top: 10px;
+}
+
+.tbl-box1 {
+  width: 100%;
+  height: 30%;
+  overflow-y: scroll;
+  float: left;
+  margin-top: 10px;
+} */
+/* table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table tr th {
+  padding: 8px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+table tr td {
+  padding: 5px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+} */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.btn-secondary {
+  width: 100%;
+  height: 50px;
+  position: relative;
+}
+.btn-secondary h6 {
+  text-align: center;
+  padding-top: 5px;
+}
+.btn .btn-danger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+}
+.btn .btn-danger i {
+  text-align: center;
+  padding-top: 5px;
+  font-size: 20px;
+}
+.box-input {
+  width: 100%;
+}
+.box-input label {
+  width: 100%;
+  font-size: 15px;
+  margin-top: 10px;
+  font-family: "Roboto", sans-serif;
+}
+.box-input input {
+  width: 100%;
+  height: 35px;
+  border-radius: 5px;
+  border: 2px solid #000000;
+}
+.box-input input[type="text"],
+.box-input input[type="email"] {
+  padding-left: 5px;
+}
+.box-input select {
+  width: 100%;
+  height: 35px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+}
+.pl {
+  padding-left: 50px;
+}
+.img-box {
+  width: 150px;
+  height: 165px;
+  float: left;
+  justify-content: center;
+  border: 1px solid #ccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../img/logo.png");
+  cursor: pointer;
+}
+.img-box input {
+  width: 100%;
+  height: 100%;
+  float: left;
+  cursor: pointer;
+  opacity: 0;
+}
+.search-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.search-bar ul li {
+  float: left;
+}
+.search-box {
+  width: 92%;
+  height: 50px;
+}
+.btn {
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
+/* .btn:hover {
+  opacity: 0.8;
+} */
+/* .btn-add-new {
+  background-color: #333;
+  color: white;
+  float: right;
+} */
+.search-box input[type="text"] {
+  width: 50%;
+  height: 40px;
+  float: left;
+  padding: 8px;
+  background-color: transparent;
+  outline: none;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.search-box select {
+  width: 10%;
+  height: 40px;
+  margin-left: 5px;
+  border-radius: 20px;
+  float: left;
+  padding: 8px;
+  background-color: black;
+  border: none;
+  outline: none;
+  color: white;
+  box-sizing: border-box;
+}
+.search-box input[type="button"] {
+  width: 10%;
+  height: 40px;
+  margin-left: 5px;
+  border-radius: 20px;
+  float: left;
+  padding: 8px;
+  background-color: orange;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
