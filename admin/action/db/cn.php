@@ -1,7 +1,7 @@
 <?php
   $sname = "localhost";
   $unmae = "root";
-  $password = ""; 
+  $password = "123456"; 
   $db_name = "doorstap";
 
   $cn = new mysqli($sname, $unmae, $password, $db_name);
