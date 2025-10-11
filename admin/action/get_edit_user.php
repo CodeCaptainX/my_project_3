@@ -2,7 +2,7 @@
   $cn   = new mysqli("localhost", "root", "", "doorstap");
   $cn->set_charset("utf8");
   $id   = $_POST['id'];
-  $sql  = "SELECT * FROM tbl_user WHERE id = $id";
+  $sql  = "SELECT * FROM tbl_users WHERE id = $id";
   $res  = $cn->query($sql);
   $row  = $res->fetch_array();
 

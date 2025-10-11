@@ -23,7 +23,7 @@ $ip         = '000';
 
 if($id >0){
     // Update existing user
-    $sql = "UPDATE tbl_user 
+    $sql = "UPDATE tbl_users 
             SET u_name = '$username', 
                 u_email = '$email', 
                 u_pass = '$pass', 
@@ -33,7 +33,7 @@ if($id >0){
                 status = '$status' 
             WHERE id = $id";
 } else {
-    $sql        = "INSERT INTO tbl_user  
+    $sql        = "INSERT INTO tbl_users  
                     VALUES
                     (null, 
                     '$username', 

@@ -23,13 +23,13 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     }else if(empty($pass)){
       header('Location: ../login.php?error=Password is required');
     }else{
-      $sql = "SELECT * FROM tbl_user WHERE u_email = '$email' AND u_pass = '$pass'";
+      $sql = "SELECT * FROM tbl_users WHERE u_email = '$email' AND u_pass = '$pass'";
       $res = $cn->query($sql);
       if ($sql === true) {
-        $post_data = "SELECT * FROM tbl_user WHERE u_email = '$email' AND u_pass = '$pass'";
+        $post_data = "SELECT * FROM tbl_users WHERE u_email = '$email' AND u_pass = '$pass'";
         $res = $cn->query($post_data);
         if (password_verify($pass, $post_data[3])) {
-          $sql = "UPDATE tbl_user SET u_ip = '$ip' WHERE u_email = '$email'";
+          $sql = "UPDATE tbl_users SET u_ip = '$ip' WHERE u_email = '$email'";
           $row = $res->fetch_array();
           $res = array('dpl' => true);
           $_SESSION['login'] = true;
