@@ -14,13 +14,13 @@ if ($cn->connect_error) {
   ];
   if ($searchOpt === "0") {
       // Default query to get all active users
-      $sql = "SELECT * FROM tbl_user WHERE status = 1 ORDER BY id DESC";
+      $sql = "SELECT * FROM tbl_users WHERE status = 1 ORDER BY id DESC";
   } else {
       // Search query based on user input
-      $sql = "SELECT * FROM tbl_user 
+      $sql = "SELECT * FROM tbl_users 
       WHERE $fieldMap[$searchField] LIKE '$searchVal%' ORDER BY id DESC";
   }
-//  $sql = "SELECT * FROM tbl_user WHERE status = 1";
+//  $sql = "SELECT * FROM tbl_users WHERE status = 1";
  $res = $cn->query($sql);
  $data = array();
   if ($res->num_rows > 0) {
