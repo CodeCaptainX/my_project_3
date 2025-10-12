@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$cn = new mysqli("localhost", "root", "", "doorstap");
+$cn = new mysqli("localhost", "root", "", "doorstep");
 $cn->set_charset("utf8");
 
 if ($cn->connect_error) {

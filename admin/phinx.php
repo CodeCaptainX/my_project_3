@@ -11,7 +11,7 @@ return [
         'development' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
-            'name' => 'doorstap',
+            'name' => 'doorstep',
             'user' => 'root',
             'pass' => '123456',
             'port' => '3306',
@@ -20,7 +20,7 @@ return [
         'production' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
-            'name' => 'doorstap',  // change if different
+            'name' => 'doorstep',  // change if different
             'user' => 'root',
             'pass' => '123456',
             'port' => '3306',
@@ -29,7 +29,7 @@ return [
         'testing' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
-            'name' => 'doorstap_test',
+            'name' => 'doorstep_test',
             'user' => 'root',
             'pass' => '123456',
             'port' => '3306',

@@ -1,6 +1,6 @@
 <?php
 // Simple database connection
-$conn = new mysqli("localhost", "root", "", "doorstap");
+$conn = new mysqli("localhost", "root", "", "doorstep");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

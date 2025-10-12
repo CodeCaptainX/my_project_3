@@ -1,5 +1,5 @@
 <?php
-  $cn = new mysqli("localhost", "root", "", "doorstap");
+  $cn = new mysqli("localhost", "root", "", "doorstep");
 ?>
 <div class="container"
   style="top:50px; position:relative; width:900px; background-color: #e8e7e7;padding: 0 12px 10px 12px; border-radius: 10px;border: 1px solid #453e3e; box-shadow: 0 0 10px rgba(0,0,0,0.1);">

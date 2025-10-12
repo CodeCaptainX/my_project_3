@@ -1,5 +1,5 @@
 <?php
-$cn = new mysqli("localhost", "root", "", "doorstap");
+$cn = new mysqli("localhost", "root", "", "doorstep");
 if ($cn->connect_error) {
     die("Connection failed: " . $cn->connect_error);
 }

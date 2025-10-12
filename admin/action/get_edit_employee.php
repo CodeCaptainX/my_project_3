@@ -1,5 +1,5 @@
 <?php
-  $cn   = new mysqli("localhost", "root", "", "doorstap");
+  $cn   = new mysqli("localhost", "root", "", "doorstep");
   $cn->set_charset("utf8");
   $id   = $_POST['id'];
   $sql  = "SELECT * FROM employees WHERE id = $id";

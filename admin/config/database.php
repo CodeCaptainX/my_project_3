@@ -2,7 +2,7 @@
 // config/database.php
 class Database {
     private $host = "localhost";
-    private $db_name = "doorstap";
+    private $db_name = "doorstep";
     private $username = "root";
     private $password = "";
     private $conn;

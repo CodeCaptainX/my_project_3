@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *"); // Allow from anywhere (for testing)
 header("Access-Control-Allow-Methods: POST");
 
 // ✅ Database connection
-$cn = new mysqli("localhost", "root", "", "doorstap");
+$cn = new mysqli("localhost", "root", "", "doorstep");
 if ($cn->connect_error) {
     die(json_encode(["status" => "error", "message" => "Database connection failed"]));
 }
