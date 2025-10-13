@@ -1,66 +1,82 @@
 <?php
 header('Content-Type: application/json');
-$cn = new mysqli("localhost", "root", "", "doorstep");
-$cn->set_charset("utf8");
-if ($cn->connect_error) {
-    die(json_encode(["error" => "Connection failed: " . $cn->connect_error]));
-};
+session_start();
 
-$sql_count = "SELECT COUNT(*) AS total FROM attendance";
-$res_count = $cn->query($sql_count);
-$total = $res_count->fetch_array();
-$s = isset($_POST['s']) ? $_POST['s'] : 0;
-$e = isset($_POST['e']) ? $_POST['e'] : 10;
+// ✅ Use absolute include path
+include(__DIR__ . "/db/cn.php");
+
+if (!isset($cn)) {
+    die(json_encode(["error" => "Database connection not initialized"]));
+}
+
+$cn->set_charset("utf8");
+
+// ✅ Safe input handling
+$s = isset($_POST['s']) ? (int) $_POST['s'] : 0;
+$e = isset($_POST['e']) ? (int) $_POST['e'] : 10;
 $from_date = isset($_POST['from_date']) ? $_POST['from_date'] : null;
 $end_date = isset($_POST['end_date']) ? $_POST['end_date'] : null;
-$position = isset($_POST['position']) ? $_POST['position'] : null;
-$search_term = isset($_POST['search_term']) ? $_POST['search_term'] : null;
-if(!empty($from_date) && !empty($end_date)) {
-    $sql = "SELECT 
-                e.id AS employee_id, e.name_eng, a.attendance_date,
-                a.check_in_1, a.check_out_1, a.check_in_2, a.check_out_2, a.note 
-            FROM 
-                attendance a 
-            JOIN 
-                employees e ON a.employee_id = e.id
-            WHERE 
-                a.attendance_date 
-            BETWEEN '$from_date' AND '$end_date' 
-            AND 
-                e.position_id = '$position' 
-            AND 
-                (e.id LIKE '%$search_term%' 
-            OR 
-                e.name_eng LIKE '%$search_term%' 
-            OR 
-                e.name_kh LIKE '%$search_term%')
-            ORDER BY 
-                a.attendance_date, e.id LIMIT $s,$e";
-} else {
-$sql = "SELECT e.id AS employee_id, e.name_eng, a.attendance_date,
-     a.check_in_1, a.check_out_1, a.check_in_2, a.check_out_2, a.note 
-     FROM 
-     attendance a 
-     JOIN 
-     employees e ON a.employee_id = e.id
-     WHERE e.id > 0 ORDER BY a.attendance_date DESC LIMIT $s,$e";
+$position = isset($_POST['position']) ? trim($_POST['position']) : null;
+$search_term = isset($_POST['search_term']) ? trim($_POST['search_term']) : null;
+
+// ✅ Count total attendance records (for pagination)
+$sql_count = "SELECT COUNT(*) AS total FROM tbl_attendance_records WHERE deleted_at IS NULL";
+$res_count = $cn->query($sql_count);
+$total = ($res_count && $res_count->num_rows > 0) ? $res_count->fetch_assoc()['total'] : 0;
+
+// ✅ Build base query
+$sql = "
+    SELECT 
+        e.id AS employee_id,
+        e.full_name,
+        e.position,
+        a.date AS attendance_date,
+        a.check_time,
+        a.check_type_id
+    FROM 
+        tbl_attendance_records a
+    JOIN 
+        tbl_employees e ON a.employee_id = e.id
+    WHERE 
+        a.deleted_at IS NULL
+";
+
+// ✅ Apply filters
+if (!empty($from_date) && !empty($end_date)) {
+    $sql .= " AND a.date BETWEEN '$from_date' AND '$end_date'";
 }
+
+if (!empty($position)) {
+    $sql .= " AND e.position LIKE '%$position%'";
+}
+
+if (!empty($search_term)) {
+    $sql .= " AND (e.full_name LIKE '%$search_term%' OR e.username LIKE '%$search_term%')";
+}
+
+$sql .= " ORDER BY a.date DESC, e.id ASC LIMIT $s, $e";
+
+// ✅ Query the data
 $res = $cn->query($sql);
-$data = array();
-if ($res->num_rows >0){
-    while ($row = $res->fetch_array()) {
-        $data[] = array(
-                'employee_id'       => $row['0'],
-                'name_eng'          => $row['1'],
-                'attendance_date'   => $row['2'],
-                'check_in_1'        => $row['3'],
-                'check_out_1'       => $row['4'],
-                'check_in_2'        => $row['5'],
-                'check_out_2'       => $row['6'],
-                'note'              => $row['7'],
-                'total'             => $total['0']
-        );
+$data = [];
+
+if ($res && $res->num_rows > 0) {
+    while ($row = $res->fetch_assoc()) {
+        $data[] = [
+            'employee_id' => $row['employee_id'],
+            'full_name' => $row['full_name'],
+            'position' => $row['position'],
+            'attendance_date' => $row['attendance_date'],
+            'check_time' => $row['check_time'],
+            'check_type_id' => $row['check_type_id'],
+            'total' => $total
+        ];
     }
-    echo json_encode($data);
+
+    echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+} else {
+    echo json_encode([]);
 }
+
+$cn->close();
 ?>
