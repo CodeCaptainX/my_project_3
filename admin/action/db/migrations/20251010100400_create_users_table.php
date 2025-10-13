@@ -15,8 +15,9 @@ final class CreateUsersTable extends AbstractMigration
             ->addColumn('password', 'string', ['limit' => 255])
             ->addColumn('full_name', 'string', ['limit' => 100])
             ->addColumn('email', 'string', ['limit' => 100])
-            ->addColumn('role', 'enum', ['values' => ['admin', 'employee']])
+            ->addColumn('role', 'string', ['limit' => 20]) // enum replaced with string
             ->addColumn('status_id', 'integer', ['limit' => 1, 'default' => 1])
+            ->addColumn('login_session', 'string', ['limit' => 255, 'null' => true]) // added column
             ->addColumn('created_at', 'datetime')
             ->addColumn('created_by', 'integer', ['null' => true])
             ->addColumn('updated_at', 'datetime', ['null' => true])
@@ -24,6 +25,7 @@ final class CreateUsersTable extends AbstractMigration
             ->addColumn('deleted_at', 'datetime', ['null' => true])
             ->addColumn('deleted_by', 'integer', ['null' => true])
             ->addIndex(['uuid'], ['unique' => true])
+            ->addIndex(['email'], ['unique' => true])
             ->create();
 
         // Insert default admin user
@@ -36,6 +38,7 @@ final class CreateUsersTable extends AbstractMigration
                 'email' => 'admin@example.com',
                 'role' => 'admin',
                 'status_id' => 1,
+                'login_session' => null,
                 'created_at' => date('Y-m-d H:i:s'),
                 'created_by' => null,
             ]

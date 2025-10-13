@@ -399,7 +399,7 @@
                         if (response.dpl === true) {
                             setTimeout(() => {
                                 window.location.href = 'index.php';
-                            }, 10000000);
+                            }, 1000);
                             showAlert('Login successful! Redirecting...', 'success');
                         } else {
                             const message = response.message || 'Login failed. Please try again.';
