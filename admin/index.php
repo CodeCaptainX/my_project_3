@@ -47,8 +47,9 @@ if ($ajax) {
 <?php require_once('inc/header.php'); ?>
 
 <body>
-  <?php require_once('inc/navigation.php'); ?>
+  <h1 class="bg-red-400 text-blue-400">dsfsdf</h1>
   <?php require_once('inc/nav-top.php'); ?>
+  <?php require_once('inc/navigation.php'); ?>
 
   <div class="contain">
     <div class="container-fluid" id="content">
@@ -63,7 +64,10 @@ if ($ajax) {
   </div>
 
   <?php require_once('inc/footer.php'); ?>
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.2.0/iconify.min.js"></script>
+
 </body>
 
 </html>
