@@ -46,12 +46,12 @@ if ($isAjax) {
 <?php include_once "inc/header.php"; ?>
 
 <body class="bg-gray-100 text-gray-900">
-  <?php include_once "inc/nav-top.php"; ?>
+  <?php include_once "inc/navbar.php"; ?>
 
   <div class="flex max-h-[calc(100vh-64px)]">
-    <?php include_once "inc/navigation.php"; ?>
+    <?php include_once "inc/sidebar.php"; ?>
 
-    <main class="flex-1 p-6" id="content">
+    <main class="flex-1 " id="content">
       <?php
       if (file_exists($pagePath)) {
         include $pagePath;

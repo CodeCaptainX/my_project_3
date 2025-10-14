@@ -10,12 +10,13 @@
       $menu_items = [
         ['page' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'mdi:view-dashboard', 'mid' => 1],
         ['page' => 'attendance', 'label' => 'Attendance', 'icon' => 'mdi:clock-check-outline', 'mid' => 2],
-        ['page' => 'employee', 'label' => 'Employee', 'icon' => 'mdi:account-group', 'mid' => 3],
-        ['page' => 'leave', 'label' => 'Leave', 'icon' => 'mdi:calendar-month', 'mid' => 4],
-        ['page' => 'report', 'label' => 'Report', 'icon' => 'mdi:chart-box', 'mid' => 5],
-        ['page' => 'user', 'label' => 'User', 'icon' => 'mdi:shield-account', 'mid' => 6],
-        ['page' => 'userapp', 'label' => 'User App', 'icon' => 'mdi:cellphone-link', 'mid' => 7]
+        ['page' => 'employee', 'label' => 'Employees', 'icon' => 'mdi:account-group', 'mid' => 3],
+        ['page' => 'leave', 'label' => 'Leave Requests', 'icon' => 'mdi:calendar-month', 'mid' => 4],
+        ['page' => 'report', 'label' => 'Reports', 'icon' => 'mdi:chart-box', 'mid' => 5],
+        ['page' => 'user', 'label' => 'User Management', 'icon' => 'mdi:shield-account', 'mid' => 6],
+        ['page' => 'audits', 'label' => 'Audits', 'icon' => 'mdi:cellphone-link', 'mid' => 7]
       ];
+
 
       if ($_SESSION['utype'] === 'admin') {
         foreach ($menu_items as $index => $item) {

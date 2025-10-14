@@ -127,7 +127,7 @@ function renderPagination(options) {
 
     // Build full pagination HTML
     const paginationHTML = `
-        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+        <div class="bg-gray-50 px-2 py-1 border-t border-gray-200">
             <div class="flex items-center justify-between flex-wrap gap-4">
                 <!-- Pagination Info -->
                 <div class="text-sm text-gray-600">

@@ -1,526 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+</style>
 
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .tab-btn.active {
-            @apply text-blue-600 border-b-2 border-blue-600;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .stat-card {
-            @apply bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 shadow-sm hover:shadow-md transition-all;
-        }
-
-        .stat-card.green {
-            @apply from-green-50 to-green-100;
-        }
-
-        .stat-card.purple {
-            @apply from-purple-50 to-purple-100;
-        }
-
-        .stat-card.orange {
-            @apply from-orange-50 to-orange-100;
-        }
-
-        .stat-card.red {
-            @apply from-red-50 to-red-100;
-        }
-
-        .badge-pending {
-            @apply bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold;
-        }
-
-        .badge-approved {
-            @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold;
-        }
-
-        .badge-rejected {
-            @apply bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-semibold;
-        }
-
-        .badge-active {
-            @apply bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold;
-        }
-
-        .badge-inactive {
-            @apply bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-semibold;
-        }
-
-        .table-row {
-            @apply border-b border-gray-200 hover:bg-gray-50 transition-colors;
-        }
-
-        .action-btn {
-            @apply p-2 hover:bg-gray-100 rounded-lg transition-colors;
-        }
-
-        .tab-btn {
-            @apply px-6 py-3 text-gray-700 font-medium cursor-pointer hover:text-blue-600 transition-colors border-b-2 border-transparent;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .animate-in {
-            animation: slideIn 0.3s ease-out;
-        }
-    </style>
-</head>
-
-<body class="bg-gray-50">
-
-    <!-- Main Content -->
-    <div class="w-full">
-        <!-- Content Area -->
-        <div class="p-8 max-w-7xl mx-auto">
-            <!-- Dashboard Tab -->
-            <div id="dashboard" class="tab-content active">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h2>
-
-                <!-- Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="stat-card">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Total Employees</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2" id="totalEmp">245</p>
-                            </div>
-                            <iconify-icon icon="mdi:account-multiple" width="40" height="40"
-                                class="text-blue-600 opacity-50"></iconify-icon>
-                        </div>
-                    </div>
-
-                    <div class="stat-card green">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Active Users</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">192</p>
-                            </div>
-                            <iconify-icon icon="mdi:check-circle" width="40" height="40"
-                                class="text-green-600 opacity-50"></iconify-icon>
-                        </div>
-                    </div>
-
-                    <div class="stat-card purple">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Pending Leaves</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2" id="pendingLeaves">12</p>
-                            </div>
-                            <iconify-icon icon="mdi:clock-outline" width="40" height="40"
-                                class="text-purple-600 opacity-50"></iconify-icon>
-                        </div>
-                    </div>
-
-                    <div class="stat-card orange">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">On Leave Today</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">8</p>
-                            </div>
-                            <iconify-icon icon="mdi:calendar-blank" width="40" height="40"
-                                class="text-orange-600 opacity-50"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Overview -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Recent Leaves -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Recent Leave Requests</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <iconify-icon icon="mdi:account" width="20" height="20"
-                                            class="text-blue-600"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-900">John Doe</p>
-                                        <p class="text-xs text-gray-600">Sick Leave</p>
-                                    </div>
-                                </div>
-                                <span class="badge-pending">Pending</span>
-                            </div>
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                        <iconify-icon icon="mdi:account" width="20" height="20"
-                                            class="text-green-600"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-900">Sarah Smith</p>
-                                        <p class="text-xs text-gray-600">Annual Leave</p>
-                                    </div>
-                                </div>
-                                <span class="badge-approved">Approved</span>
-                            </div>
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                <div class="flex items-center space-x-4">
-                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                        <iconify-icon icon="mdi:account" width="20" height="20"
-                                            class="text-purple-600"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-900">Mike Johnson</p>
-                                        <p class="text-xs text-gray-600">Casual Leave</p>
-                                    </div>
-                                </div>
-                                <span class="badge-rejected">Rejected</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Employee Overview -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Department Breakdown</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <iconify-icon icon="mdi:briefcase" width="20" height="20"
-                                        class="text-blue-600"></iconify-icon>
-                                    <span class="text-gray-700 font-medium">Engineering</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-24 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-900">65</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <iconify-icon icon="mdi:human-greeting-variant" width="20" height="20"
-                                        class="text-green-600"></iconify-icon>
-                                    <span class="text-gray-700 font-medium">Sales</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-24 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-green-600 h-2 rounded-full" style="width: 45%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-900">45</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <iconify-icon icon="mdi:headset" width="20" height="20"
-                                        class="text-purple-600"></iconify-icon>
-                                    <span class="text-gray-700 font-medium">Support</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-24 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-purple-600 h-2 rounded-full" style="width: 35%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-900">35</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <iconify-icon icon="mdi:finance" width="20" height="20"
-                                        class="text-orange-600"></iconify-icon>
-                                    <span class="text-gray-700 font-medium">Finance</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-24 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-orange-600 h-2 rounded-full" style="width: 30%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-gray-900">30</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="bg-gray-100 min-h-full">
+    <div class=" p-2">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-sm p-4 mb-4 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                <p class="text-sm text-gray-500">Welcome back, Admin</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <iconify-icon icon="mdi:bell" width="20"></iconify-icon>
+                </button>
+                <div class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    A
                 </div>
             </div>
+        </div>
 
-            <!-- Employees Tab -->
-            <div id="employees" class="tab-content">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Employee Management</h2>
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900">Employee Directory</h3>
-                        <button
-                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
-                            <iconify-icon icon="mdi:plus" width="20" height="20"></iconify-icon>
-                            <span>Add Employee</span>
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-50 border-b border-gray-200">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Name</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Position</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Department</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Join Date</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-3">
-                                            <div
-                                                class="w-8 h-8 bg-blue-200 rounded-full flex items-center justify-center">
-                                                <span class="text-sm font-bold text-blue-700">JD</span>
-                                            </div>
-                                            <span class="font-medium text-gray-900">John Doe</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-700">john.doe@company.com</td>
-                                    <td class="px-6 py-4 text-gray-700">Senior Developer</td>
-                                    <td class="px-6 py-4 text-gray-700">Engineering</td>
-                                    <td class="px-6 py-4"><span class="badge-active">Active</span></td>
-                                    <td class="px-6 py-4 text-gray-700">Jan 15, 2022</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button class="action-btn" title="Edit">
-                                                <iconify-icon icon="mdi:pencil" width="18" height="18"
-                                                    class="text-blue-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="View">
-                                                <iconify-icon icon="mdi:eye" width="18" height="18"
-                                                    class="text-gray-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="Delete">
-                                                <iconify-icon icon="mdi:delete" width="18" height="18"
-                                                    class="text-red-600"></iconify-icon>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-3">
-                                            <div
-                                                class="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center">
-                                                <span class="text-sm font-bold text-green-700">SS</span>
-                                            </div>
-                                            <span class="font-medium text-gray-900">Sarah Smith</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-700">sarah.smith@company.com</td>
-                                    <td class="px-6 py-4 text-gray-700">Product Manager</td>
-                                    <td class="px-6 py-4 text-gray-700">Product</td>
-                                    <td class="px-6 py-4"><span class="badge-active">Active</span></td>
-                                    <td class="px-6 py-4 text-gray-700">Mar 20, 2021</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button class="action-btn" title="Edit">
-                                                <iconify-icon icon="mdi:pencil" width="18" height="18"
-                                                    class="text-blue-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="View">
-                                                <iconify-icon icon="mdi:eye" width="18" height="18"
-                                                    class="text-gray-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="Delete">
-                                                <iconify-icon icon="mdi:delete" width="18" height="18"
-                                                    class="text-red-600"></iconify-icon>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-3">
-                                            <div
-                                                class="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center">
-                                                <span class="text-sm font-bold text-purple-700">MJ</span>
-                                            </div>
-                                            <span class="font-medium text-gray-900">Mike Johnson</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-700">mike.johnson@company.com</td>
-                                    <td class="px-6 py-4 text-gray-700">HR Specialist</td>
-                                    <td class="px-6 py-4 text-gray-700">Human Resources</td>
-                                    <td class="px-6 py-4"><span class="badge-inactive">Inactive</span></td>
-                                    <td class="px-6 py-4 text-gray-700">Jul 10, 2020</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button class="action-btn" title="Edit">
-                                                <iconify-icon icon="mdi:pencil" width="18" height="18"
-                                                    class="text-blue-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="View">
-                                                <iconify-icon icon="mdi:eye" width="18" height="18"
-                                                    class="text-gray-600"></iconify-icon>
-                                            </button>
-                                            <button class="action-btn" title="Delete">
-                                                <iconify-icon icon="mdi:delete" width="18" height="18"
-                                                    class="text-red-600"></iconify-icon>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <!-- Stats Grid -->
+        <div id="statsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"></div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Recent Leaves -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow-sm p-4">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Recent Leave Requests</h3>
+                <div id="leaveRequests" class="space-y-3"></div>
             </div>
 
-            <!-- Leaves Tab -->
-            <div id="leaves" class="tab-content">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Leave Management</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Pending Requests</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">12</p>
-                            </div>
-                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                                <iconify-icon icon="mdi:clock" width="24" height="24"
-                                    class="text-yellow-600"></iconify-icon>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Approved This Month</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">24</p>
-                            </div>
-                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                                <iconify-icon icon="mdi:check-circle" width="24" height="24"
-                                    class="text-green-600"></iconify-icon>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Rejected</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">3</p>
-                            </div>
-                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                                <iconify-icon icon="mdi:close-circle" width="24" height="24"
-                                    class="text-red-600"></iconify-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Department Breakdown -->
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Departments</h3>
+                <div id="departments" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div class="p-6 border-b border-gray-200">
-                        <h3 class="text-lg font-bold text-gray-900">Leave Requests</h3>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead class="bg-gray-50 border-b border-gray-200">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Employee</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Leave Type</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">From - To</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Days</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Reason</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4 font-medium text-gray-900">John Doe</td>
-                                    <td class="px-6 py-4 text-gray-700">Sick Leave</td>
-                                    <td class="px-6 py-4 text-gray-700">Oct 15 - Oct 17</td>
-                                    <td class="px-6 py-4 text-gray-700">3 days</td>
-                                    <td class="px-6 py-4 text-gray-700">Medical</td>
-                                    <td class="px-6 py-4"><span class="badge-pending">Pending</span></td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button
-                                                class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded hover:bg-green-200 transition-colors">Approve</button>
-                                            <button
-                                                class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded hover:bg-red-200 transition-colors">Reject</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4 font-medium text-gray-900">Sarah Smith</td>
-                                    <td class="px-6 py-4 text-gray-700">Annual Leave</td>
-                                    <td class="px-6 py-4 text-gray-700">Oct 20 - Oct 31</td>
-                                    <td class="px-6 py-4 text-gray-700">12 days</td>
-                                    <td class="px-6 py-4 text-gray-700">Vacation</td>
-                                    <td class="px-6 py-4"><span class="badge-approved">Approved</span></td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button class="action-btn" title="View">
-                                                <iconify-icon icon="mdi:eye" width="18" height="18"
-                                                    class="text-gray-600"></iconify-icon>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4 font-medium text-gray-900">Emily Wilson</td>
-                                    <td class="px-6 py-4 text-gray-700">Maternity Leave</td>
-                                    <td class="px-6 py-4 text-gray-700">Nov 01 - Dec 31</td>
-                                    <td class="px-6 py-4 text-gray-700">61 days</td>
-                                    <td class="px-6 py-4 text-gray-700">Maternity</td>
-                                    <td class="px-6 py-4"><span class="badge-pending">Pending</span></td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center space-x-2">
-                                            <button
-                                                class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded hover:bg-green-200 transition-colors">Approve</button>
-                                            <button
-                                                class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded hover:bg-red-200 transition-colors">Reject</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<script>
+    // Data
+    const stats = [
+        { icon: 'mdi:account-multiple', value: '245', label: 'Total Employees', color: 'blue' },
+        { icon: 'mdi:check-circle', value: '192', label: 'Active Users', color: 'green' },
+        { icon: 'mdi:clock-outline', value: '12', label: 'Pending Leaves', color: 'orange' },
+        { icon: 'mdi:calendar-blank', value: '8', label: 'On Leave Today', color: 'purple' }
+    ];
+
+    const leaveRequests = [
+        { name: 'John Doe', type: 'Sick Leave', days: '3 days', status: 'Pending', color: 'blue', statusColor: 'yellow' },
+        { name: 'Sarah Smith', type: 'Annual Leave', days: '12 days', status: 'Approved', color: 'green', statusColor: 'green' },
+        { name: 'Mike Johnson', type: 'Casual Leave', days: '2 days', status: 'Rejected', color: 'purple', statusColor: 'red' },
+        { name: 'Emily Wilson', type: 'Maternity Leave', days: '61 days', status: 'Pending', color: 'orange', statusColor: 'yellow' }
+    ];
+
+    const departments = [
+        { name: 'Engineering', count: 65, percentage: 65, color: 'blue' },
+        { name: 'Sales', count: 45, percentage: 45, color: 'green' },
+        { name: 'Support', count: 35, percentage: 35, color: 'purple' },
+        { name: 'Finance', count: 30, percentage: 30, color: 'orange' },
+        { name: 'HR', count: 25, percentage: 25, color: 'pink' }
+    ];
+
+    // Render Stats
+    const statsGrid = document.getElementById('statsGrid');
+    stats.forEach(stat => {
+        statsGrid.innerHTML += `
+        <div class="bg-white rounded-lg shadow-sm p-4">
+            <div class="flex items-center justify-between mb-2">
+                <iconify-icon icon="${stat.icon}" width="24" class="text-${stat.color}-600"></iconify-icon>
+            </div>
+            <p class="text-2xl font-bold text-gray-900">${stat.value}</p>
+            <p class="text-xs text-gray-600">${stat.label}</p>
+        </div>
+    `;
+    });
+
+    // Render Leave Requests
+    const leaveRequestsDiv = document.getElementById('leaveRequests');
+    leaveRequests.forEach(req => {
+        leaveRequestsDiv.innerHTML += `
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-${req.color}-100 rounded-full flex items-center justify-center">
+                    <iconify-icon icon="mdi:account" width="18" class="text-${req.color}-600"></iconify-icon>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-900">${req.name}</p>
+                    <p class="text-xs text-gray-500">${req.type} • ${req.days}</p>
                 </div>
             </div>
+            <span class="text-xs font-semibold px-2 py-1 bg-${req.statusColor}-100 text-${req.statusColor}-800 rounded-full">${req.status}</span>
+        </div>
+    `;
+    });
 
-            <!-- Users Tab -->
-            <div id="users" class="tab-content">
-                <h2 class="text-3xl font-bold text-gray-900 mb-8">Users & Roles</h2>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-600 text-sm font-medium">Total Users</p>
-                                <p class="text-3xl font-bold text-gray-900 mt-2">256</p>
-                            </div>
-                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <iconify-icon icon="mdi:account-multiple" width="24" height="24"
-                                    class="text-blue-600"></iconify-icon>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p
+    // Render Departments
+    const departmentsDiv = document.getElementById('departments');
+    departments.forEach(dept => {
+        departmentsDiv.innerHTML += `
+        <div>
+            <div class="flex items-center justify-between mb-1">
+                <span class="text-sm text-gray-700 font-medium">${dept.name}</span>
+                <span class="text-sm font-bold text-gray-900">${dept.count}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-${dept.color}-600 h-2 rounded-full" style="width: ${dept.percentage}%"></div>
+            </div>
+        </div>
+    `;
+    });
+</script>
