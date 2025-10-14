@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +41,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -212,7 +214,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .alert {
@@ -228,6 +232,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -254,6 +259,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-header">
@@ -268,12 +274,7 @@
                 <label for="email">Email Address</label>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-envelope input-icon"></i>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="you@example.com" 
-                        required 
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required
                         autocomplete="email">
                 </div>
             </div>
@@ -282,12 +283,7 @@
                 <label for="password">Password</label>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your password" 
-                        required 
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required
                         autocomplete="current-password">
                     <button type="button" class="toggle-password" id="togglePassword">
                         <i class="fa-solid fa-eye"></i>
@@ -309,13 +305,14 @@
         </form>
 
         <div class="login-footer">
-            <p>Don't have an account? <a href="register.php" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign Up</a></p>
+            <p>Don't have an account? <a href="register.php"
+                    style="color: #667eea; text-decoration: none; font-weight: 600;">Sign Up</a></p>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const emailInput = $('#email');
             const passwordInput = $('#password');
             const togglePasswordBtn = $('#togglePassword');
@@ -324,7 +321,7 @@
             const alertBox = $('#alertBox');
 
             // Toggle password visibility
-            togglePasswordBtn.click(function(e) {
+            togglePasswordBtn.click(function (e) {
                 e.preventDefault();
                 const isPassword = passwordInput.attr('type') === 'password';
                 passwordInput.attr('type', isPassword ? 'text' : 'password');
@@ -349,7 +346,7 @@
             }
 
             // Handle form submission
-            loginForm.submit(function(e) {
+            loginForm.submit(function (e) {
                 e.preventDefault();
                 alertBox.empty();
 
@@ -395,7 +392,7 @@
                     },
                     dataType: 'json',
                     timeout: 5000,
-                    success: function(response) {
+                    success: function (response) {
                         if (response.dpl === true) {
                             setTimeout(() => {
                                 window.location.href = 'index.php';
@@ -409,7 +406,7 @@
                             passwordInput.val('').focus();
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         showAlert('Connection error. Please try again.', 'error');
                         loginBtn.removeClass('loading').prop('disabled', false);
                         loginBtn.html('Sign In');
@@ -418,10 +415,11 @@
             });
 
             // Clear alert when user starts typing
-            emailInput.add(passwordInput).on('input', function() {
+            emailInput.add(passwordInput).on('input', function () {
                 alertBox.empty();
             });
         });
     </script>
 </body>
+
 </html>

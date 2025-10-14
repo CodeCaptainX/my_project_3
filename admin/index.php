@@ -48,7 +48,7 @@ if ($isAjax) {
 <body class="bg-gray-100 text-gray-900">
   <?php include_once "inc/nav-top.php"; ?>
 
-  <div class="flex min-h-screen">
+  <div class="flex max-h-[calc(100vh-64px)]">
     <?php include_once "inc/navigation.php"; ?>
 
     <main class="flex-1 p-6" id="content">
@@ -58,11 +58,12 @@ if ($isAjax) {
       } else {
         include "pages/404.html";
       }
+
       ?>
     </main>
   </div>
 
-  <?php include_once "inc/footer.php"; ?>
+  <!-- <?php include_once "inc/footer.php"; ?> -->
 
   <!-- Scripts -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -71,3 +72,18 @@ if ($isAjax) {
 </body>
 
 </html>
+
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #content {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    max-height: calc(100vh-64px);
+  }
+</style>
