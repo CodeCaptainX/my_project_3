@@ -25,3 +25,23 @@ document.addEventListener("DOMContentLoaded", function () {
         loadPage(page);
     });
 });
+
+
+// Optional: AJAX page loading (for smoother transitions)
+document.querySelectorAll("aside a").forEach(link => {
+    link.addEventListener("click", async e => {
+        e.preventDefault();
+        const url = e.target.getAttribute("href");
+        const res = await fetch(`${url}&ajax=1`);
+        const html = await res.text();
+        document.getElementById("content").innerHTML = html;
+        history.pushState({}, "", url);
+    });
+});
+
+// Handle back/forward navigation
+window.addEventListener("popstate", async () => {
+    const url = location.search + "&ajax=1";
+    const res = await fetch(url);
+    document.getElementById("content").innerHTML = await res.text();
+});
