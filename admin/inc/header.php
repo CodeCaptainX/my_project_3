@@ -10,7 +10,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="style/icon/css/all.min.css">
   <link rel="stylesheet" href="style/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style/style.css">
+  <!-- <link rel="stylesheet" href="style/style.css"> -->
   <script src="js/jquery.js"></script>
 
 </head>
