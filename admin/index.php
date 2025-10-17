@@ -46,13 +46,13 @@ if ($isAjax) {
 <?php include_once "inc/header.php"; ?>
 
 <body class="bg-gray-100 text-gray-900">
-  <?php include_once "inc/navbar.php"; ?>
+    <?php include_once "inc/navbar.php"; ?>
 
-  <div class="flex max-h-[calc(100vh-64px)]">
-    <?php include_once "inc/sidebar.php"; ?>
+    <div class="flex max-h-[calc(100vh-56px)]">
+        <?php include_once "inc/sidebar.php"; ?>
 
-    <main class="flex-1 " id="content">
-      <?php
+        <main class="flex-1 " id="content">
+            <?php
       if (file_exists($pagePath)) {
         include $pagePath;
       } else {
@@ -60,30 +60,30 @@ if ($isAjax) {
       }
 
       ?>
-    </main>
-  </div>
+        </main>
+    </div>
 
-  <!-- <?php include_once "inc/footer.php"; ?> -->
+    <!-- <?php include_once "inc/footer.php"; ?> -->
 
-  <!-- Scripts -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://code.iconify.design/3/3.2.0/iconify.min.js"></script>
-  <script src="assets/js/script.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.2.0/iconify.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
 
 
 <style>
-  * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
-  #content {
+#content {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     max-height: calc(100vh-64px);
-  }
+}
 </style>
