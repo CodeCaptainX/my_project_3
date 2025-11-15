@@ -1,55 +1,85 @@
 <?php
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode([
+        "success" => false,
+        "message" => "Method not allowed. Use POST."
+    ]);
+    exit;
+}
+
 session_start();
 
 include(__DIR__ . "/../../action/db/cn.php");
 include(__DIR__ . "/../../utils/response.php");
 
-if (!isset($cn)) {
-    jsonErrorResponse("Database connection not initialized", [], 500);
+// Check database connection
+if (!isset($cn) || $cn->connect_error) {
+    jsonErrorResponse("Database connection failed", [], 500);
+    exit;
 }
 
-$cn->set_charset("utf8");
-if ($cn->connect_error) {
-    jsonErrorResponse("Connection failed: " . $cn->connect_error, [], 500);
+// Get and validate input
+$rawInput = file_get_contents('php://input');
+$input = json_decode($rawInput, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    jsonErrorResponse("Invalid JSON input: " . json_last_error_msg());
+    exit;
 }
 
-// --- Read JSON body ---
-$input = json_decode(file_get_contents("php://input"), true);
-if (!$input) {
-    jsonErrorResponse("Invalid or missing JSON body", [], 400);
+if (!isset($input['id']) || empty($input['id'])) {
+    jsonErrorResponse("Employee ID is required");
+    exit;
 }
 
-if (empty($input['id'])) {
-    jsonErrorResponse("Missing employee ID", [], 400);
+$employeeId = (int)$input['id'];
+
+try {
+    // First, check if employee exists and is not already deleted
+    $checkStmt = $cn->prepare("SELECT id, CONCAT(first_name, ' ', last_name) as full_name FROM tbl_employees WHERE id = ? AND deleted_at IS NULL");
+    $checkStmt->bind_param("i", $employeeId);
+    $checkStmt->execute();
+    $result = $checkStmt->get_result();
+    $employee = $result->fetch_assoc();
+    $checkStmt->close();
+
+    if (!$employee) {
+        jsonErrorResponse("Employee not found or already deleted");
+        exit;
+    }
+
+    // Perform soft delete
+    $deleteStmt = $cn->prepare("UPDATE tbl_employees SET deleted_at = NOW() WHERE id = ?");
+    $deleteStmt->bind_param("i", $employeeId);
+    
+    if ($deleteStmt->execute()) {
+        $deleteStmt->close();
+        
+        // Success response
+        echo json_encode([
+            "success" => true,
+            "message" => "Employee '{$employee['full_name']}' has been deleted successfully",
+            "deleted_id" => $employeeId
+        ]);
+    } else {
+        throw new Exception("Failed to delete employee: " . $deleteStmt->error);
+    }
+    
+} catch (Exception $e) {
+    error_log("Delete employee error: " . $e->getMessage());
+    jsonErrorResponse("Failed to delete employee: " . $e->getMessage());
 }
 
-$employee_id = (int) $input['id'];
-$deleted_by = $_SESSION['uid'] ?? 0;
-
-// --- Soft delete ---
-$sql = "UPDATE tbl_employees 
-        SET deleted_at = NOW(), deleted_by = ?
-        WHERE id = ? AND deleted_at IS NULL";
-
-$stmt = $cn->prepare($sql);
-if (!$stmt) {
-    jsonErrorResponse("SQL prepare failed: " . $cn->error, [], 500);
-}
-
-$stmt->bind_param("ii", $deleted_by, $employee_id);
-
-if (!$stmt->execute()) {
-    jsonErrorResponse("Failed to delete employee: " . $stmt->error, [], 500);
-}
-
-if ($stmt->affected_rows === 0) {
-    jsonErrorResponse("Employee not found or already deleted", [], 404);
-}
-
-jsonResponse("Employee soft-deleted successfully", [
-    "employee_id" => $employee_id
-]);
-
-$stmt->close();
 $cn->close();
+?>
