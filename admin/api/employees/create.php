@@ -36,6 +36,19 @@ $status_id = isset($input['status_id']) ? (int)$input['status_id'] : 1;
 $user_id = isset($input['user_id']) ? (int)$input['user_id'] : null;
 $created_by = $_SESSION['uid'] ?? null;
 
+// --- 🧠 Fix date_hired formatting ---
+$date_hired = trim($input['date_hired']);
+
+// If only year is provided (e.g. "2025"), make it a valid date "2025-01-01"
+if (preg_match('/^\d{4}$/', $date_hired)) {
+    $date_hired .= '-01-01';
+}
+
+// If date format is invalid, throw error
+if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date_hired)) {
+    jsonErrorResponse("Invalid date format for date_hired. Expected YYYY-MM-DD.", [], 400);
+}
+
 // --- SQL ---
 $sql = "INSERT INTO tbl_employees 
         (uuid, user_id, username, first_name, last_name, full_name, position, department, date_hired, status_id, created_at, created_by)
@@ -46,20 +59,20 @@ if (!$stmt) {
     jsonErrorResponse("SQL prepare failed: " . $cn->error, [], 500);
 }
 
-// ✅ There are exactly 11 placeholders => 11 bind parameters
+// ✅ FIXED: 11 parameters with correct type string "sisssssssii"
 $stmt->bind_param(
-    "sissssssiii",
-    $uuid,
-    $user_id,
-    $input['username'],
-    $input['first_name'],
-    $input['last_name'],
-    $full_name,
-    $input['position'],
-    $input['department'],
-    $input['date_hired'],
-    $status_id,
-    $created_by
+    "sisssssssii",  // Changed to 11 characters: s-i-s-s-s-s-s-s-s-i-i
+    $uuid,          // s - string
+    $user_id,       // i - integer (can be null, but bind_param handles it)
+    $input['username'], // s - string
+    $input['first_name'], // s - string
+    $input['last_name'],  // s - string
+    $full_name,     // s - string
+    $input['position'],   // s - string
+    $input['department'], // s - string
+    $date_hired,    // s - string (date)
+    $status_id,     // i - integer
+    $created_by     // i - integer
 );
 
 if (!$stmt->execute()) {
@@ -74,3 +87,4 @@ jsonResponse("Employee created successfully", [
 
 $stmt->close();
 $cn->close();
+?>
